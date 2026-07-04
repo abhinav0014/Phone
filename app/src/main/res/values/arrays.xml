@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="pref_audio_route_entries">
+        <item>@string/audio_route_earpiece_normal</item>
+        <item>@string/audio_route_speaker_loud</item>
+    </string-array>
+    <string-array name="pref_audio_route_values">
+        <item>earpiece</item>
+        <item>speaker</item>
+    </string-array>
+</resources>

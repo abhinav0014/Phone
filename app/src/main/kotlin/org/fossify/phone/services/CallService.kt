@@ -1,5 +1,6 @@
 package org.fossify.phone.services
 
+import android.content.Context
 import android.telecom.Call
 import android.telecom.CallAudioState
 import android.telecom.InCallService
@@ -27,6 +28,18 @@ class CallService : InCallService() {
                 callNotificationManager.cancelNotification()
             } else {
                 callNotificationManager.setupNotification()
+            }
+
+            // Automatically switch to default audio route when the call becomes active
+            if (state == Call.STATE_ACTIVE) {
+                val prefs = this@CallService.getSharedPreferences("${this@CallService.packageName}_preferences", Context.MODE_PRIVATE)
+                val defaultAudioRoute = prefs.getString("pref_default_audio_route", "speaker")
+
+                if (defaultAudioRoute == "speaker") {
+                    this@CallService.setAudioRoute(CallAudioState.ROUTE_SPEAKER)
+                } else if (defaultAudioRoute == "earpiece") {
+                    this@CallService.setAudioRoute(CallAudioState.ROUTE_EARPIECE)
+                }
             }
         }
     }

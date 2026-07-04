@@ -115,6 +115,7 @@ class SettingsActivity : SimpleActivity() {
         setupDisableProximitySensor()
         setupDisableSwipeToAnswer()
         setupAlwaysShowFullscreen()
+        setupDefaultAudioRoute()
         setupCallsExport()
         setupCallsImport()
         updateTextColors(binding.settingsHolder)
@@ -390,6 +391,29 @@ class SettingsActivity : SimpleActivity() {
             }
         }
     }
+
+    private fun setupDefaultAudioRoute() {
+        binding.settingsDefaultAudioRoute.text = getDefaultAudioRouteText()
+        binding.settingsDefaultAudioRouteHolder.setOnClickListener {
+            val items = arrayListOf(
+                RadioItem(0, getString(R.string.audio_route_earpiece_normal), "earpiece"),
+                RadioItem(1, getString(R.string.audio_route_speaker_loud), "speaker")
+            )
+
+            val checkedItemId = if (config.defaultAudioRoute == "earpiece") 0 else 1
+            RadioGroupDialog(this, items, checkedItemId) {
+                config.defaultAudioRoute = it as String
+                binding.settingsDefaultAudioRoute.text = getDefaultAudioRouteText()
+            }
+        }
+    }
+
+    private fun getDefaultAudioRouteText() = getString(
+        when (config.defaultAudioRoute) {
+            "earpiece" -> R.string.audio_route_earpiece_normal
+            else -> R.string.audio_route_speaker_loud
+        }
+    )
 
     private fun setupCallsExport() {
         binding.settingsExportCallsHolder.setOnClickListener {

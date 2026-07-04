@@ -135,4 +135,8 @@ class Config(context: Context) : BaseConfig(context) {
     var alwaysShowFullscreen: Boolean
         get() = prefs.getBoolean(ALWAYS_SHOW_FULLSCREEN, false)
         set(alwaysShowFullscreen) = prefs.edit().putBoolean(ALWAYS_SHOW_FULLSCREEN, alwaysShowFullscreen).apply()
+
+    var defaultAudioRoute: String
+        get() = prefs.getString("pref_default_audio_route", "speaker") ?: "speaker"
+        set(defaultAudioRoute) = prefs.edit().putString("pref_default_audio_route", defaultAudioRoute).apply()
 }
